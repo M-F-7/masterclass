@@ -3,14 +3,16 @@ CONTAINER_NAME = masterclass-app-1
 JUPYTER_NAME = masterclass-jupyter-1
 
 all:
-# 	@docker build -t $(IMG_NAME) .
 	@docker compose up --build -d
 	@echo "My app is accessible on http://localhost:8080"
 	@echo "Jupyter accessible on http://localhost:8888"
-# 	@docker run -d --name $(CONTAINER_NAME) -p 8080:8080 8888:8888 $(IMG_NAME)
 
 help:
-	@echo "TODO"
+	@echo "make: build and launch the services"
+	@echo "make shell: enter in the shell of the app container"
+	@echo "make cp: Copy the notebook in the container to the local directory"
+	@echo "make ps: Show all the services launched"
+	@echo "make clear: down and clean the containers"
 
 shell:
 	@docker exec -it $(CONTAINER_NAME) bash
