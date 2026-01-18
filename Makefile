@@ -1,6 +1,7 @@
 IMG_NAME = app
 CONTAINER_NAME = masterclass-app-1
 JUPYTER_NAME = masterclass-jupyter-1
+MODEL_NAME = model.joblib
 
 all:
 	@docker compose up --build -d
@@ -24,6 +25,7 @@ ps:
 
 cp:
 	@docker cp $(JUPYTER_NAME):/app/notebooks/model.ipynb notebooks/
+	@docker cp $(JUPYTER_NAME):/app/models/$(MODEL_NAME) models/
 
 clear:
 	@docker cp $(JUPYTER_NAME):/app/notebooks/model.ipynb notebooks/
