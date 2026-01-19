@@ -144,12 +144,12 @@
         .then(res => res.json())
         .then(data => {
             const pred = data.prediction === 1 ? "✔️ Survivant" : "❌ Non survivant";
-
+                
             document.getElementById("result").textContent =
                 "Résultat : " + pred +
-                "\n\nProbabilités :\n" +
-                JSON.stringify(data.probabilities, null, 2);
+                "\n\n" + data.message;
         })
+
         .catch(err => {
             document.getElementById("result").textContent = "Erreur : " + err;
         });

@@ -27,7 +27,7 @@ class InputData(BaseModel):
 
 @app.get('/')
 def home():
-    return {"message": "Home"}
+    return FileResponse("/app/src/static/home.html")
 
 @app.get("/predict")
 def serve_predict_page():
@@ -48,10 +48,17 @@ def predict(data: InputData):
     prediction = model.predict(X)[0]
     proba = model.predict_proba(X)[0].tolist()
 
+    survival_proba = float(proba[1])
+    percentage = round(survival_proba * 100, 2)
+
+    # Message lisible
+    message = f"Le passager a {percentage}% de chance de survivre."
+
     return {
         "prediction": int(prediction),
-        "probabilities": proba
+        "message": message
     }
+
 
 # Pclass, -> 1,2,3, int
 # Age -> 0-150, int

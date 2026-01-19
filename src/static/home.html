@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Titanic Survival Predictor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+            color: #e0e1dd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header {
+            padding: 80px 20px 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 1.3rem;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .content {
+            max-width: 800px;
+            padding: 40px 20px;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: #778da9;
+            color: #0d1b2a;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #a9bcd0;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🛳️ Titanic Survival Predictor</h1>
+    <p class="subtitle">
+        Une application Machine Learning permettant d’estimer les chances de survie d’un passager du Titanic,
+        basée sur le célèbre dataset de Kaggle.
+    </p>
+</header>
+
+<div class="content">
+    <p>
+        Ce projet combine <strong>analyse de données</strong>, <strong>modélisation Machine Learning</strong> et 
+        <strong>déploiement d’une API</strong> grâce à FastAPI et Docker.
+        L’objectif est de transformer un simple modèle d’entraînement en une application complète,
+        utilisable via une interface web intuitive.
+    </p>
+
+    <p>
+        Le modèle utilisé est un <strong>RandomForestClassifier</strong>, choisi pour sa robustesse,
+        sa capacité à gérer des données hétérogènes et ses excellentes performances sur ce type de problème.
+    </p>
+
+    <p>
+        Vous pouvez accéder à la page de prédiction pour tester différents profils de passagers
+        et visualiser leurs probabilités de survie.
+    </p>
+
+    <a href="/predict" class="btn">Accéder à la prédiction</a>
+</div>
+
+<footer>
+    Masterclass – Matteo Fernandes  
+</footer>
+
+</body>
+</html>
