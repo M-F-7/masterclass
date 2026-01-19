@@ -7,3 +7,4 @@ jupyterlab==4.2.5
 scikit-learn==1.8.0
 matplotlib==3.8.4
 seaborn==0.13.2
+pydantic

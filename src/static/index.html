@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prédiction Titanic</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 420px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Prédiction Titanic</h1>
+
+    <label>Pclass (1, 2 ou 3)</label>
+    <input id="pclass" type="number" min="1" max="3" required>
+
+    <label>Age (0 à 150)</label>
+    <input id="age" type="number" min="0" max="150" required>
+
+    <label>SibSp (0+)</label>
+    <input id="sibsp" type="number" min="0" required>
+
+    <label>Parch (0+)</label>
+    <input id="parch" type="number" min="0" required>
+
+    <label>Fare (0+)</label>
+    <input id="fare" type="number" min="0" step="0.01" required>
+
+    <label>Sexe</label>
+    <select id="sex">
+        <option value="1">Homme</option>
+        <option value="0">Femme</option>
+    </select>
+
+    <label>Embarquement</label>
+    <select id="embarked">
+        <option value="S">Southampton</option>
+        <option value="Q">Queenstown</option>
+        <option value="C">Cherbourg</option>
+    </select>
+
+    <button onclick="predict()">Prédire</button>
+
+    <pre id="result"></pre>
+</div>
+
+<script>
+    function predict() {
+
+        // Validation simple
+        const pclass = Number(document.getElementById("pclass").value);
+        const age = Number(document.getElementById("age").value);
+        const sibsp = Number(document.getElementById("sibsp").value);
+        const parch = Number(document.getElementById("parch").value);
+        const fare = Number(document.getElementById("fare").value);
+
+        if (!pclass || !age || sibsp < 0 || parch < 0 || fare < 0) {
+            document.getElementById("result").textContent = "Veuillez remplir tous les champs correctement.";
+            return;
+        }
+
+        const embarked = document.getElementById("embarked").value;
+
+        // One-hot encoding
+        let embarked_Q = embarked === "Q" ? 1 : 0;
+        let embarked_S = embarked === "S" ? 1 : 0;
+
+        const features = [
+            pclass,
+            age,
+            sibsp,
+            parch,
+            fare,
+            Number(document.getElementById("sex").value),
+            embarked_Q,
+            embarked_S
+        ];
+
+        fetch("/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ features })
+        })
+        .then(res => res.json())
+        .then(data => {
+            const pred = data.prediction === 1 ? "✔️ Survivant" : "❌ Non survivant";
+
+            document.getElementById("result").textContent =
+                "Résultat : " + pred +
+                "\n\nProbabilités :\n" +
+                JSON.stringify(data.probabilities, null, 2);
+        })
+        .catch(err => {
+            document.getElementById("result").textContent = "Erreur : " + err;
+        });
+    }
+</script>
+
+</body>
+</html>

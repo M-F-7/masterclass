@@ -13,6 +13,8 @@ COPY data/ ./data
 
 COPY notebooks/ ./notebooks
 
+COPY models/ ./models
+
 #--no-cache-dir -> force pip to reinstall all the necessary for the differents libraries 
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
