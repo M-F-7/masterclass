@@ -1,5 +1,13 @@
-discover pytest
-
 faire une video pour la demo, et voir si il peut y avoir une partie interactive ou je demande un test par l utilisateur et je lui donne l output
 
-avoir une version for english speakers dans la presentation
+avoir une version for english speakers dans la presentation*
+
+
+
+- Faire une home page style explications
+- Organiser le front
+- Verif les tests de pytest
+- Test le endpoint predict voir si les resultat sont good
+- review et clean le code
+- Faire Readme
+- Faire les slides

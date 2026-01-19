@@ -1,27 +1,55 @@
-#using a version of python > 3.9
-FROM python:3.12
+############################
+# 1) BUILD STAGE
+############################
+FROM python:3.12 AS dev
 
 WORKDIR /app
 
-#copy the  local requirements.txt in the container
-COPY ./requirements.txt requirements.txt
+COPY requirements-dev.txt .
+RUN pip install --no-cache-dir -r requirements-dev.txt
 
-#copy the src of the app in the container
+
 COPY src/ ./src
-
+COPY models/ ./models
 COPY data/ ./data
-
 COPY notebooks/ ./notebooks
 
-COPY models/ ./models
+# to get the package src
+ENV PYTHONPATH="/app"
 
-#--no-cache-dir -> force pip to reinstall all the necessary for the differents libraries 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token="]
 
-#set the port 8080 exposed for the app
+
+############################
+# 2) TEST STAGE
+############################
+FROM dev AS tester
+
+COPY test/ ./test
+
+# Lauch the test, stop if fail
+RUN pytest -v
+
+
+############################
+# 3) PRODUCTION STAGE
+############################
+FROM python:3.12-slim AS prod
+
+WORKDIR /app
+
+# Copier uniquement ce qui est nécessaire pour exécuter l'app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+# install curl for the healthcheck
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
+
+COPY --from=dev /app/src ./src
+COPY --from=dev /app/models ./models
+
+ENV PYTHONPATH="/app"
+
 EXPOSE 8080
-
-#expose the default port of jupyterlab
-EXPOSE 8888
 
 CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8080"]

@@ -1,14 +1,47 @@
 services:
-  app:
-    build: .
+  api:
+    build:
+      context: .
+      target: prod
     ports:
       - "8080:8080"
+    networks:
+      - myapp
+    volumes:
+      - ./src:/app/src
+      - ./models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
 
-  jupyter:
-    build: .
-    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+
+
+  dev:
+    build:
+      context: .
+      target: dev
     ports:
       - "8888:8888"
+    networks:
+      - myapp
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./models:/app/models
+
+  test:
+    build:
+      context: .
+      target: tester
+    networks:
+      - myapp
+    depends_on:
+      api:
+        condition: service_healthy
 
 networks:
   myapp:

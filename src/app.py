@@ -33,6 +33,11 @@ def home():
 def serve_predict_page():
     return FileResponse("/app/src/static/index.html")
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 
 @app.post("/predict")
 def predict(data: InputData):
