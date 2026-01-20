@@ -3,68 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Prédiction Titanic</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 420px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 4px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-        }
-
-        button {
-            width: 100%;
-            margin-top: 20px;
-            padding: 12px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        #result {
-            background: #eef2f7;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/index.css">
 </head>
 
 <body>
@@ -107,7 +46,6 @@
 <script>
     function predict() {
 
-        // Validation simple
         const pclass = Number(document.getElementById("pclass").value);
         const age = Number(document.getElementById("age").value);
         const sibsp = Number(document.getElementById("sibsp").value);
@@ -121,7 +59,6 @@
 
         const embarked = document.getElementById("embarked").value;
 
-        // One-hot encoding
         let embarked_Q = embarked === "Q" ? 1 : 0;
         let embarked_S = embarked === "S" ? 1 : 0;
 
