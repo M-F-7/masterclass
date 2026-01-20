@@ -22,9 +22,9 @@ services:
   dev:
     build:
       context: .
-      target: dev
+      target: dev #FOR JUPYTER
     ports:
-      - "8888:8888"
+      - "8888:8888" #can access with any ip
     networks:
       - myapp
     volumes:
@@ -36,7 +36,7 @@ services:
   test:
     build:
       context: .
-      target: tester
+      target: tester #pytest (/test)
     networks:
       - myapp
     depends_on:

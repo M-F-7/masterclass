@@ -38,7 +38,6 @@ FROM python:3.12-slim AS prod
 
 WORKDIR /app
 
-# Copier uniquement ce qui est nécessaire pour exécuter l'app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 # install curl for the healthcheck

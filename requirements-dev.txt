@@ -1,9 +1,9 @@
-jupyterlab==4.2.5 #dev
-scikit-learn==1.8.0 #dev 
-matplotlib==3.8.4 #dev
-seaborn==0.13.2 #dev
-numpy==1.26.4 #dev
-pandas==2.2.2 #dev
+jupyterlab==4.2.5
+scikit-learn==1.8.0 
+matplotlib==3.8.4
+seaborn==0.13.2
+numpy==1.26.4
+pandas==2.2.2
 fastapi==0.115.0
 pytest==8.3.3
 pytest-asyncio==0.23.7
