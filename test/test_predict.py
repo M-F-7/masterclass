@@ -8,10 +8,10 @@ def test_predict_valid_input():
         "features": [3, 22, 1, 0, 7.25, 1, 0, 1]
     }
 
-    response = client.post("/predict", json=payload)
+    response = client.post("/predict", json=payload) # try an input
 
     assert response.status_code == 200
-    print(response.json())
+    print(response.json()) # check all works correctly
     data = response.json()
 
     assert "prediction" in data

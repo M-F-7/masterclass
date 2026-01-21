@@ -20,8 +20,7 @@ app.add_middleware( # allow the communication between front end and backend
     allow_headers=["*"],
 )
 
-
-# Définir le schéma d'entrée
+# Base model use to have a good format 
 class InputData(BaseModel):
     features: list[float]
 
@@ -45,10 +44,10 @@ def predict(data: InputData):
     X = np.array(data.features).reshape(1, -1)
 
     # predict
-    prediction = model.predict(X)[0]
+    prediction = model.predict(X)[0] # only one passenger is asking -> so only need to take the first element
     proba = model.predict_proba(X)[0].tolist()
 
-    survival_proba = float(proba[1])
+    survival_proba = float(proba[1]) # taking the part of the result if the passenger is alive
     percentage = round(survival_proba * 100, 2)
 
     message = f"Le passager a {percentage}% de chance de survivre."
